@@ -1,0 +1,16 @@
+.counter-container {
+  display: inline-flex;
+  justify-content: center;
+  margin: 12px;
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.counter-container p {
+  padding: 0 15px;
+  margin: 0;
+}
+
+.counter-container button {
+  margin: 0;
+}
