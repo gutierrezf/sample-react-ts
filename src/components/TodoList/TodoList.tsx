@@ -1,22 +1,30 @@
 import React from "react";
-import TodoForm from "./TodoForm";
+import TodoForm, { iTodo } from "./TodoForm";
 import Todo from "./Todo";
 
-export default class TodoList extends React.Component {
-  state = {
+type TodoToShowOption = "all" | "active" | "complete";
+
+interface TodoListState {
+  todos: iTodo[];
+  todoToShow: TodoToShowOption;
+  toggleAllComplete: boolean;
+}
+
+export default class TodoList extends React.Component<{}, TodoListState> {
+  state: TodoListState = {
     todos: [],
     todoToShow: "all",
     toggleAllComplete: true
   };
 
-  addTodo = todo => {
-    this.setState(state => ({
+  addTodo = (todo: iTodo) => {
+    this.setState((state: TodoListState) => ({
       todos: [todo, ...state.todos]
     }));
   };
 
-  toggleComplete = id => {
-    this.setState(state => ({
+  toggleComplete = (id: string) => {
+    this.setState((state: TodoListState) => ({
       todos: state.todos.map(todo => {
         if (todo.id === id) {
           // suppose to update
@@ -31,13 +39,13 @@ export default class TodoList extends React.Component {
     }));
   };
 
-  updateTodoToShow = s => {
+  updateTodoToShow = (s: TodoToShowOption) => {
     this.setState({
       todoToShow: s
     });
   };
 
-  handleDeleteTodo = id => {
+  handleDeleteTodo = (id: string) => {
     this.setState(state => ({
       todos: state.todos.filter(todo => todo.id !== id)
     }));
@@ -50,7 +58,7 @@ export default class TodoList extends React.Component {
   };
 
   render() {
-    let todos = [];
+    let todos: iTodo[] = [];
 
     if (this.state.todoToShow === "all") {
       todos = this.state.todos;

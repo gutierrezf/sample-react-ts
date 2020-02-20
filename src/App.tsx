@@ -23,7 +23,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Counter count={this.state.count} increment={this.increment} decrement={this.decrement}/>
+        <Counter
+          count={this.state.count}
+          increment={this.increment}
+          decrement={this.decrement}
+        />
         <TodoList />
       </div>
     );

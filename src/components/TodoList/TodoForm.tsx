@@ -1,24 +1,43 @@
 import React from "react";
 import shortid from "shortid";
 
-export default class TodoForm extends React.Component {
-  state = {
+export interface iTodo {
+  id: string;
+  text: string;
+  complete: boolean;
+}
+
+interface TodoFormState {
+  text: string;
+}
+
+export interface TodoFormProps {
+  onSubmit: (todo: iTodo) => void;
+}
+
+export default class TodoForm extends React.Component<
+  TodoFormProps,
+  TodoFormState
+> {
+  state: TodoFormState = {
     text: ""
   };
 
-  handleChange = event => {
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      [event.target.name]: event.target.value
+      text: event.target.value
     });
   };
 
-  handleSubmit = event => {
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     this.props.onSubmit({
       id: shortid.generate(),
       text: this.state.text,
       complete: false
     });
+
     this.setState({
       text: ""
     });
@@ -37,9 +56,7 @@ export default class TodoForm extends React.Component {
           onChange={this.handleChange}
           placeholder="todo..."
         />
-        <button className="btn btn-primary" onClick={this.handleSubmit}>
-          add todo
-        </button>
+        <button className="btn btn-primary">add todo</button>
       </form>
     );
   }
